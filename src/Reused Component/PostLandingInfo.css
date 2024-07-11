@@ -1,0 +1,12 @@
+.PostLandingCardmyCard {
+  display: flex;
+  margin: 45px 35px;
+}
+.PostLandingImage {
+  width: 55px;
+  margin-top: 20px;
+  margin-right: 15px;
+}
+.PostLandingTitle {
+  margin-bottom: 15px;
+}

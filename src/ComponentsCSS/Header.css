@@ -1,0 +1,44 @@
+.Header {
+  margin: 10px 30px;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+}
+.Items {
+  text-decoration: none;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 40px;
+}
+.item {
+  padding-right: 15px;
+  font-size: 12px;
+  border: none;
+  font-weight: 500;
+}
+.midHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.imageTitle {
+  display: flex;
+  align-items: center;
+  margin-left: 0px;
+}
+.Emerald {
+  width: 35px;
+}
+.Mina {
+  font-weight: 700;
+}
+.Mint {
+  color: #2ebb77;
+}
+.rightTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

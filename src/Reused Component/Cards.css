@@ -1,0 +1,17 @@
+.cardContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.BSButton {
+  position: absolute;
+  bottom: 10%;
+  left: auto;
+}
+.cardsImage {
+  border-radius: 30px;
+  width: 100%;
+}
