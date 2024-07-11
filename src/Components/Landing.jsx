@@ -22,7 +22,6 @@ const Landing = () => {
       });
   }, []);
 
-  
   return (
     <div>
       <div className="boxes">
@@ -65,25 +64,17 @@ const Landing = () => {
         <h1 className="text-center">Featured products</h1>
         <p className="text-center">What's more, we do it right!</p>
         <Row className="mx-5">
-          <div className="col-lg-3 col-md-4 cold-sm-6">
-            <Product
-              img="http://localhost:5173/678d5bd5-a1a8-486c-a3ed-ab63ad8efdcb"
-              title="My Item"
-              price="My Price"
-            />
-          </div>
-          <div className="col-lg-3 col-md-4 cold-sm-6">
-            <Product img={product1} title="My Item" price="My Price" />
-          </div>
-          <div className="col-lg-3 col-md-4 cold-sm-6">
-            <Product img={product1} title="My Item" price="My Price" />
-          </div>
-          <div className="col-lg-3 col-md-4 cold-sm-6">
-            <Product img={product1} title="My Item" price="My Price" />
-          </div>
-          <div className="col-lg-3 col-md-4 cold-sm-6">
-            <Product img={product1} title="My Item" price="My Price" />
-          </div>
+          {products.map((product) => {
+            return (
+              <div className="col-lg-3 col-md-4 cold-sm-6">
+                <Product
+                  img={product.imageUrl}
+                  title={product.name}
+                  price={product.price}
+                />
+              </div>
+            );
+          })}
         </Row>
       </Container>
     </div>

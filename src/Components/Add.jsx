@@ -7,6 +7,7 @@ import {
 } from "firebase/storage";
 import { storage } from "../firebaseConfig";
 import "../ComponentsCSS/Add.css";
+
 const Add = () => {
   const [product, setProduct] = useState({
     name: "",
