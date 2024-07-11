@@ -16,6 +16,8 @@
   font-size: 12px;
   border: none;
   font-weight: 500;
+  display: flex;
+  align-items: center;
 }
 .midHeader {
   display: flex;

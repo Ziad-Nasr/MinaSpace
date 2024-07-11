@@ -22,6 +22,7 @@ const Landing = () => {
       });
   }, []);
 
+  
   return (
     <div>
       <div className="boxes">

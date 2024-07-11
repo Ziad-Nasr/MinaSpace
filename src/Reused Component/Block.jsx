@@ -2,7 +2,7 @@ import Box1 from "../assets/Box1.png";
 import "./Block.css";
 const Block = () => {
   return (
-    <div>
+    <div className="boxContainer">
       <img src={Box1} className="Box" />
       <div className="boxDetails">
         <h2>T-shirt printing made easy.</h2>

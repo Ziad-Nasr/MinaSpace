@@ -31,8 +31,8 @@ const Header = () => {
   return (
     <div className="Header">
       {/* <div className="midHeader"></div> */}
-      <ul className="Items">
-        <li className="item Mint">Home</li>
+      <ul className="Items m-0">
+        <li className="item Mint ">Home</li>
         <li className="item">MinaSpace</li>
         <li className="item">Shop</li>
         <li className="item">Blog</li>
@@ -40,7 +40,7 @@ const Header = () => {
       </ul>
       <div className="imageTitle">
         <img src={Emerald} className="Emerald" />
-        <p className="Mina">Mina Space</p>
+        <p className="Mina m-0">Mina Space</p>
       </div>
       <div className="rightTitle">
         <ReactSearchBox

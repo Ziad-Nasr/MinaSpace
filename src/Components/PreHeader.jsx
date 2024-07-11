@@ -21,7 +21,7 @@ const PreHeader = () => {
         </div>
         <div className="middleText">
           <img src={flame} className="flame" />
-          <p> Free shipping on all U.S. orders $50+</p>
+          <p className="m-0"> Free shipping on all U.S. orders $50+</p>
         </div>
         <div className="loginSignup">
           <button className="login">Login</button>
