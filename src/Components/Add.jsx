@@ -38,6 +38,7 @@ const Add = () => {
   }
 
   async function handleSubmit(e) {
+    e.preventDefault(); // Prevent the default form submission behavior
     console.log(product);
 
     const storageRef = ref(storage, `images/${image.name}`);
@@ -60,21 +61,23 @@ const Add = () => {
             ...prevProduct,
             imageUrl: downloadURL,
           }));
-          console.log(product.imageUrl);
-          console.log("File available at", downloadURL);
+
+          fetch("https://63b02f17649c73f572cafbc3.mockapi.io/Products", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ...product,
+              imageUrl: downloadURL,
+            }),
+          }).then((e) => {
+            console.log(e);
+            alert("Product added successfully");
+          });
         });
       }
     );
-    fetch("https://63b02f17649c73f572cafbc3.mockapi.io/Products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(product),
-    }).then((e) => {
-      console.log(e);
-      alert("Product added successfully");
-    });
   }
 
   return (
