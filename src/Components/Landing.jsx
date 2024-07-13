@@ -12,6 +12,7 @@ const Landing = () => {
   const { data, error, isLoading } = useFetch(
     "https://63b02f17649c73f572cafbc3.mockapi.io/Products"
   );
+  console.log(isLoading);
 
   return (
     <div>
@@ -55,17 +56,18 @@ const Landing = () => {
         <h1 className="text-center">Featured products</h1>
         <p className="text-center">What's more, we do it right!</p>
         <Row className="mx-5">
-          {data && data.map((product) => {
-            return (
-              <div className="col-lg-3 col-md-4 cold-sm-6">
-                <Product
-                  img={product.imageUrl}
-                  title={product.name}
-                  price={product.price}
-                />
-              </div>
-            );
-          })}
+          {data &&
+            data.map((product) => {
+              return (
+                <div key={product.id} className="col-lg-3 col-md-4 cold-sm-6">
+                  <Product
+                    img={product.imageUrl}
+                    title={product.name}
+                    price={product.price}
+                  />
+                </div>
+              );
+            })}
         </Row>
       </Container>
     </div>

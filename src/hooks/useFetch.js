@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 export function useFetch(url) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
     if (!url) return;
@@ -17,13 +17,17 @@ export function useFetch(url) {
       })
       .then((data) => {
         setData(data);
-        setLoading(false);
+        setisLoading(() => {
+          !isLoading;
+        });
       })
       .catch((error) => {
         setError(error);
-        setLoading(false);
+        setisLoading(() => {
+          !isLoading;
+        });
       });
   }, [url]);
 
-  return { data, error, loading };
+  return { data, error, isLoading };
 }

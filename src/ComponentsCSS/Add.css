@@ -1,4 +1,12 @@
 .addBody {
   height: 100vh;
   background-color: #b0ddd8;
+  width: 100vw;
+}
+.iconImage {
+  max-width: 55px;
+}
+.icon {
+  max-width: 35px;
+  cursor: pointer;
 }

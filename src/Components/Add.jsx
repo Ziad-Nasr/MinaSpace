@@ -7,6 +7,9 @@ import {
 } from "firebase/storage";
 import { storage } from "../firebaseConfig";
 import "../ComponentsCSS/Add.css";
+import { useFetch } from "../hooks/useFetch";
+import bin from "../assets/bin.png";
+import update from "../assets/gear.png";
 
 const Add = () => {
   const [product, setProduct] = useState({
@@ -17,6 +20,10 @@ const Add = () => {
   });
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
+
+  const { data, error, isLoading } = useFetch(
+    "https://63b02f17649c73f572cafbc3.mockapi.io/Products"
+  );
 
   function handleProductChange(e) {
     const { id, value, files } = e.target;
@@ -39,9 +46,14 @@ const Add = () => {
 
   async function handleSubmit(e) {
     e.preventDefault(); // Prevent the default form submission behavior
+    const { name, price } = product;
+    if (!name || !price || !image) {
+      alert("Please fill out all fields");
+      return;
+    }
     console.log(product);
 
-    const storageRef = ref(storage, `images/${image.name}`);
+    const storageRef = ref(storage, `images/${product.name}`);
     const uploadTask = uploadBytesResumable(storageRef, image);
 
     uploadTask.on(
@@ -80,9 +92,15 @@ const Add = () => {
     );
   }
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+    
+  }
+
+  console.log(isLoading);
   return (
-    <div className="d-flex justify-content-center align-items-center addBody">
-      <div className="col-md-5">
+    <div className="addBody col-lg-12 d-flex flex-column align-items-center">
+      <div className="col-md-5 d-flex flex-column w-50">
         <h2 className="text-center">Add a new product</h2>
         <div className="form-group my-4">
           <label htmlFor="exampleInputEmail1">Product Name</label>
@@ -90,6 +108,7 @@ const Add = () => {
             type="text"
             className="form-control"
             id="name"
+            required
             placeholder="Enter Product Name"
             onChange={handleProductChange}
           />
@@ -100,6 +119,7 @@ const Add = () => {
             type="number"
             className="form-control"
             id="price"
+            required
             placeholder="Price"
             value={product.price}
             onChange={handleProductChange}
@@ -113,19 +133,47 @@ const Add = () => {
             className="form-control"
             type="file"
             id="image"
+            required
             accept=".png, .jpg, .jpeg"
             onChange={handleProductChange}
           />
         </div>
         <button
           type="submit"
-          className="btn btn-primary mt-4"
+          className="btn btn-primary mt-1"
           onClick={handleSubmit}
         >
           Submit
         </button>
-        <div className="text-center">Tester</div>
       </div>
+      {!isLoading && (
+        <div className="mt-4 col-lg-7">
+          {data.map((product) => (
+            <div
+              className="row align-items-center mb-4 bg-secondary rounded-5"
+              key={product.id}
+            >
+              <div className="col-md-3 col-lg-3">
+                <img
+                  src={product.imageUrl}
+                  alt={product.name}
+                  className="img-fluid iconImage"
+                />
+              </div>
+              <div className="col-md-3 col-lg-3">
+                <h4>{product.name}</h4>
+              </div>
+              <div className="col-md-3 col-lg-4">
+                <h5>{product.price}</h5>
+              </div>
+              <div className="col-md-3 col-lg-2 d-flex">
+                <img src={update} alt="Update" className="img-fluid icon"/>
+                <img src={bin} alt="Delete" className="img-fluid ms-2 icon" onClick={handleDelete} />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
