@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
-  getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
+  deleteObject,
 } from "firebase/storage";
 import { storage } from "../firebaseConfig";
 import "../ComponentsCSS/Add.css";
 import { useFetch } from "../hooks/useFetch";
 import bin from "../assets/bin.png";
 import update from "../assets/gear.png";
+import play from "../assets/play-button.png";
 
 const Add = () => {
   const [product, setProduct] = useState({
@@ -20,10 +21,17 @@ const Add = () => {
   });
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
-
   const { data, error, isLoading } = useFetch(
     "https://63b02f17649c73f572cafbc3.mockapi.io/Products"
   );
+  const [productList, setProductList] = useState([]);
+  const [selectedProductId, setSelectedProductId] = useState(null);
+
+  useEffect(() => {
+    if (data) {
+      setProductList(data);
+    }
+  }, [data]);
 
   function handleProductChange(e) {
     const { id, value, files } = e.target;
@@ -45,14 +53,12 @@ const Add = () => {
   }
 
   async function handleSubmit(e) {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
     const { name, price } = product;
     if (!name || !price || !image) {
       alert("Please fill out all fields");
       return;
     }
-    console.log(product);
-
     const storageRef = ref(storage, `images/${product.name}`);
     const uploadTask = uploadBytesResumable(storageRef, image);
 
@@ -62,18 +68,12 @@ const Add = () => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setProgress(progress);
-        console.log("Upload Is " + progress + "% Done");
       },
       (error) => {
         console.log(error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setProduct((prevProduct) => ({
-            ...prevProduct,
-            imageUrl: downloadURL,
-          }));
-
           fetch("https://63b02f17649c73f572cafbc3.mockapi.io/Products", {
             method: "POST",
             headers: {
@@ -83,26 +83,54 @@ const Add = () => {
               ...product,
               imageUrl: downloadURL,
             }),
-          }).then((e) => {
-            console.log(e);
-            alert("Product added successfully");
-          });
+          })
+            .then((response) => response.json())
+            .then((newProduct) => {
+              setProductList((prevList) => [...prevList, newProduct]);
+              alert("Product added successfully");
+            });
         });
       }
     );
   }
 
-  const handleDelete = (e) => {
-    e.preventDefault();
-    
-  }
+  const handleDelete = async (id, imageName) => {
+    try {
+      const imageRef = ref(storage, `images/${imageName}`);
+      await deleteObject(imageRef);
+    } catch (error) {
+      console.log("Error deleting image from firebase storage, ", error);
+    }
+    fetch(`https://63b02f17649c73f572cafbc3.mockapi.io/Products/${id}`, {
+      method: "DELETE",
+    }).then(() => {
+      setProductList((prevList) =>
+        prevList.filter((product) => product.id !== id)
+      );
+      alert("Product deleted successfully");
+    });
+  };
 
-  console.log(isLoading);
+  const handleUpdate = (productId) => {
+    setSelectedProductId(productId);
+    const productToUpdate = productList.find(
+      (product) => product.id === productId
+    );
+  };
+
+  const handleAcceptUpdate = async () => {
+    setSelectedProductId(null);
+  };
+
   return (
     <div className="addBody col-lg-12 d-flex flex-column align-items-center">
-      <div className="col-md-5 d-flex flex-column w-50">
+      <div
+        className={`col-md-5 d-flex flex-column w-50 ${
+          selectedProductId && selectedProductId !== product.id ? "blurred" : ""
+        }`}
+      >
         <h2 className="text-center">Add a new product</h2>
-        <div className="form-group my-4">
+        <div className="form-group mt-3">
           <label htmlFor="exampleInputEmail1">Product Name</label>
           <input
             type="text"
@@ -113,7 +141,7 @@ const Add = () => {
             onChange={handleProductChange}
           />
         </div>
-        <div className="form-group my-4">
+        <div className="form-group my-3">
           <label htmlFor="exampleInputPrice">Product Price</label>
           <input
             type="number"
@@ -148,16 +176,20 @@ const Add = () => {
       </div>
       {!isLoading && (
         <div className="mt-4 col-lg-7">
-          {data.map((product) => (
+          {productList.map((product) => (
             <div
-              className="row align-items-center mb-4 bg-secondary rounded-5"
+              className={`row align-items-center mb-4 bg-secondary rounded-5 ${
+                selectedProductId && selectedProductId !== product.id
+                  ? "blurred"
+                  : ""
+              }`}
               key={product.id}
             >
               <div className="col-md-3 col-lg-3">
                 <img
                   src={product.imageUrl}
                   alt={product.name}
-                  className="img-fluid iconImage"
+                  className="img-fluid iconImage my-2"
                 />
               </div>
               <div className="col-md-3 col-lg-3">
@@ -167,8 +199,28 @@ const Add = () => {
                 <h5>{product.price}</h5>
               </div>
               <div className="col-md-3 col-lg-2 d-flex">
-                <img src={update} alt="Update" className="img-fluid icon"/>
-                <img src={bin} alt="Delete" className="img-fluid ms-2 icon" onClick={handleDelete} />
+                <img
+                  src={bin}
+                  alt="Delete"
+                  className="img-fluid icon"
+                  onClick={() => {
+                    handleDelete(product.id, product.imageName);
+                  }}
+                />
+                <img
+                  src={update}
+                  alt="Update"
+                  className="img-fluid icon ms-2"
+                  onClick={() => handleUpdate(product.id)}
+                />
+                {selectedProductId === product.id && (
+                  <img
+                    src={play}
+                    alt="Update"
+                    className="img-fluid icon ms-2"
+                    onClick={() => handleAcceptUpdate(product.id)}
+                  />
+                )}
               </div>
             </div>
           ))}
