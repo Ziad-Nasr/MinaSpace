@@ -118,8 +118,38 @@ const Add = () => {
     );
   };
 
+  const handleUpdateChange = (e) => {
+    const { id, value } = e.target;
+    console.log(id, value);
+    setProductList((prevList) =>
+      prevList.map((product) => {
+        if (product.id === selectedProductId) {
+          return {
+            ...product,
+            [id]: value,
+          };
+        }
+        return product;
+      })
+    );
+  };
+
   const handleAcceptUpdate = async () => {
-    setSelectedProductId(null);
+    fetch(
+      `https://63b02f17649c73f572cafbc3.mockapi.io/Products/${selectedProductId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+          productList.find((product) => product.id === selectedProductId)
+        ),
+      }
+    ).then(() => {
+      setSelectedProductId(null);
+      alert("Product updated successfully");
+    });
   };
 
   return (
@@ -192,12 +222,40 @@ const Add = () => {
                   className="img-fluid iconImage my-2"
                 />
               </div>
-              <div className="col-md-3 col-lg-3">
-                <h4>{product.name}</h4>
-              </div>
-              <div className="col-md-3 col-lg-4">
-                <h5>{product.price}</h5>
-              </div>
+              {selectedProductId === product.id ? (
+                <div className="col-md-3 col-lg-4">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    required
+                    placeholder="Enter Product Name"
+                    value={product.name}
+                    onChange={handleUpdateChange}
+                  />
+                </div>
+              ) : (
+                <div className="col-md-3 col-lg-4">
+                  <h4>{product.name}</h4>
+                </div>
+              )}
+              {selectedProductId === product.id ? (
+                <div className="col-md-3 col-lg-3">
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="price"
+                    required
+                    placeholder="Price"
+                    value={product.price}
+                    onChange={handleUpdateChange}
+                  />
+                </div>
+              ) : (
+                <div className="col-md-3 col-lg-3">
+                  <h5>{product.price}</h5>
+                </div>
+              )}
               <div className="col-md-3 col-lg-2 d-flex">
                 <img
                   src={bin}
