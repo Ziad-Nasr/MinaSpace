@@ -11,7 +11,7 @@ import "../ComponentsCSS/Add.css";
 const Add = () => {
   const [product, setProduct] = useState({
     name: "",
-    price: "",
+    price: 0.0,
     imageUrl: "",
     imageName: "",
   });
@@ -95,12 +95,13 @@ const Add = () => {
           />
         </div>
         <div className="form-group my-4">
-          <label htmlFor="exampleInputPrice">Password</label>
+          <label htmlFor="exampleInputPrice">Product Price</label>
           <input
-            type="text"
+            type="number"
             className="form-control"
             id="price"
             placeholder="Price"
+            value={product.price}
             onChange={handleProductChange}
           />
         </div>
@@ -123,6 +124,7 @@ const Add = () => {
         >
           Submit
         </button>
+        <div className="text-center">Tester</div>
       </div>
     </div>
   );
