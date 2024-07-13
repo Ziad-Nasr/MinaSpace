@@ -10,7 +10,7 @@ const Product = (props) => {
           className="mb-3 productImage"
         />
         <h4>{props.title}</h4>
-        <h5>{props.price}</h5>
+        <h5>{props.price}$</h5>
       </div>
     </>
   );

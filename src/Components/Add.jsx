@@ -153,13 +153,17 @@ const Add = () => {
   };
 
   return (
-    <div className={`addBody col-lg-12 d-flex flex-column align-items-center ${productList.length > 2 ? "Percentage":"viewHeight"}`}>
+    <div
+      className={`addBody col-lg-12 d-flex flex-column align-items-center ${
+        productList.length > 2 ? "Percentage" : "viewHeight"
+      }`}
+    >
       <div
         className={`col-md-5 d-flex flex-column w-50 ${
           selectedProductId && selectedProductId !== product.id ? "blurred" : ""
         }`}
       >
-        <h2 className="text-center">Add a new product</h2>
+        <h2 className="text-center mt-3">Add a new product</h2>
         <div className="form-group mt-3">
           <label htmlFor="exampleInputEmail1">Product Name</label>
           <input

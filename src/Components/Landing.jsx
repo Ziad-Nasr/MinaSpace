@@ -7,12 +7,24 @@ import Card from "../Reused Component/Cards";
 import { Container, Row, Col } from "react-bootstrap";
 import Product from "../Reused Component/Product";
 import { useFetch } from "../hooks/useFetch";
+import { useMemo } from "react";
 
 const Landing = () => {
   const { data, error, isLoading } = useFetch(
     "https://63b02f17649c73f572cafbc3.mockapi.io/Products"
   );
-  console.log(isLoading);
+  const dataLen = data ? data.length : 0;
+  const memoizedProducts = useMemo(() => {
+    if (data) {
+      return data.map((product) => ({
+        id: product.id,
+        img: product.imageUrl,
+        title: product.name,
+        price: product.price,
+      }));
+    }
+    return [];
+  }, [dataLen]);
 
   return (
     <div>
@@ -56,18 +68,15 @@ const Landing = () => {
         <h1 className="text-center">Featured products</h1>
         <p className="text-center">What's more, we do it right!</p>
         <Row className="mx-5">
-          {data &&
-            data.map((product) => {
-              return (
-                <div key={product.id} className="col-lg-3 col-md-4 cold-sm-6">
-                  <Product
-                    img={product.imageUrl}
-                    title={product.name}
-                    price={product.price}
-                  />
-                </div>
-              );
-            })}
+          {memoizedProducts.map((product) => (
+            <div key={product.id} className="col-lg-3 col-md-4 cold-sm-6">
+              <Product
+                img={product.img}
+                title={product.title}
+                price={product.price}
+              />
+            </div>
+          ))}
         </Row>
       </Container>
     </div>
