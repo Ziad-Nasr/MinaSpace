@@ -153,7 +153,7 @@ const Add = () => {
   };
 
   return (
-    <div className="addBody col-lg-12 d-flex flex-column align-items-center">
+    <div className={`addBody col-lg-12 d-flex flex-column align-items-center ${productList.length > 2 ? "Percentage":"viewHeight"}`}>
       <div
         className={`col-md-5 d-flex flex-column w-50 ${
           selectedProductId && selectedProductId !== product.id ? "blurred" : ""
@@ -204,6 +204,8 @@ const Add = () => {
           Submit
         </button>
       </div>
+      <br />
+      <h2 className="text-center mt-4">Product List</h2>
       {!isLoading && (
         <div className="mt-4 col-lg-7">
           {productList.map((product) => (

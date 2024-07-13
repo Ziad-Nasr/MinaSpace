@@ -1,7 +1,12 @@
 .addBody {
-  height: 100vh;
   background-color: #b0ddd8;
   width: 100vw;
+}
+.viewHeight {
+  height: 100vh;
+}
+.Percentage {
+  height: 100%;
 }
 .iconImage {
   max-width: 55px;
