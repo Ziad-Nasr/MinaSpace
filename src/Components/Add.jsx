@@ -11,8 +11,10 @@ import { useFetch } from "../hooks/useFetch";
 import bin from "../assets/bin.png";
 import update from "../assets/gear.png";
 import play from "../assets/play-button.png";
+import { useNavigate } from "react-router-dom";
 
 const Add = () => {
+  const navigator = useNavigate();
   const [product, setProduct] = useState({
     name: "",
     price: 0.0,
@@ -154,142 +156,154 @@ const Add = () => {
 
   return (
     <div
-      className={`addBody col-lg-12 d-flex flex-column align-items-center ${
-        productList.length > 2 ? "Percentage" : "viewHeight"
-      }`}
+      className={
+        productList.length > 2 ? "Percentage addBody" : "viewHeight addBody"
+      }
     >
-      <div
-        className={`col-md-5 d-flex flex-column w-50 ${
-          selectedProductId && selectedProductId !== product.id ? "blurred" : ""
-        }`}
+      <button
+        className="btn btn-primary sticky-top left"
+        onClick={() => {
+          navigator("/");
+        }}
       >
-        <h2 className="text-center mt-3">Add a new product</h2>
-        <div className="form-group mt-3">
-          <label htmlFor="exampleInputEmail1">Product Name</label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            required
-            placeholder="Enter Product Name"
-            onChange={handleProductChange}
-          />
-        </div>
-        <div className="form-group my-3">
-          <label htmlFor="exampleInputPrice">Product Price</label>
-          <input
-            type="number"
-            className="form-control"
-            id="price"
-            required
-            placeholder="Price"
-            value={product.price}
-            onChange={handleProductChange}
-          />
-        </div>
-        <div className="form-group mb-4">
-          <label type="formFile" className="form-label">
-            Choose an image to upload
-          </label>
-          <input
-            className="form-control"
-            type="file"
-            id="image"
-            required
-            accept=".png, .jpg, .jpeg"
-            onChange={handleProductChange}
-          />
-        </div>
-        <button
-          type="submit"
-          className="btn btn-primary mt-1"
-          onClick={handleSubmit}
+        Return
+      </button>
+      <div className={"col-lg-12 d-flex flex-column align-items-center"}>
+        <div
+          className={`col-md-5 d-flex flex-column w-50 ${
+            selectedProductId && selectedProductId !== product.id
+              ? "blurred"
+              : ""
+          }`}
         >
-          Submit
-        </button>
-      </div>
-      <br />
-      <h2 className="text-center mt-4">Product List</h2>
-      {!isLoading && (
-        <div className="mt-4 col-lg-7">
-          {productList.map((product) => (
-            <div
-              className={`row align-items-center mb-4 bg-secondary rounded-5 ${
-                selectedProductId && selectedProductId !== product.id
-                  ? "blurred"
-                  : ""
-              }`}
-              key={product.id}
-            >
-              <div className="col-md-3 col-lg-3">
-                <img
-                  src={product.imageUrl}
-                  alt={product.name}
-                  className="img-fluid iconImage my-2"
-                />
-              </div>
-              {selectedProductId === product.id ? (
-                <div className="col-md-3 col-lg-4">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    required
-                    placeholder="Enter Product Name"
-                    value={product.name}
-                    onChange={handleUpdateChange}
-                  />
-                </div>
-              ) : (
-                <div className="col-md-3 col-lg-4">
-                  <h4>{product.name}</h4>
-                </div>
-              )}
-              {selectedProductId === product.id ? (
-                <div className="col-md-3 col-lg-3">
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="price"
-                    required
-                    placeholder="Price"
-                    value={product.price}
-                    onChange={handleUpdateChange}
-                  />
-                </div>
-              ) : (
-                <div className="col-md-3 col-lg-3">
-                  <h5>{product.price}</h5>
-                </div>
-              )}
-              <div className="col-md-3 col-lg-2 d-flex">
-                <img
-                  src={bin}
-                  alt="Delete"
-                  className="img-fluid icon"
-                  onClick={() => {
-                    handleDelete(product.id, product.imageName);
-                  }}
-                />
-                <img
-                  src={update}
-                  alt="Update"
-                  className="img-fluid icon ms-2"
-                  onClick={() => handleUpdate(product.id)}
-                />
-                {selectedProductId === product.id && (
+          <h2 className="text-center mt-3">Add a new product</h2>
+          <div className="form-group mt-3">
+            <label htmlFor="exampleInputEmail1">Product Name</label>
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              required
+              placeholder="Enter Product Name"
+              onChange={handleProductChange}
+            />
+          </div>
+          <div className="form-group my-3">
+            <label htmlFor="exampleInputPrice">Product Price</label>
+            <input
+              type="number"
+              className="form-control"
+              id="price"
+              required
+              placeholder="Price"
+              value={product.price}
+              onChange={handleProductChange}
+            />
+          </div>
+          <div className="form-group mb-4">
+            <label type="formFile" className="form-label">
+              Choose an image to upload
+            </label>
+            <input
+              className="form-control"
+              type="file"
+              id="image"
+              required
+              accept=".png, .jpg, .jpeg"
+              onChange={handleProductChange}
+            />
+          </div>
+          <button
+            type="submit"
+            className="btn btn-primary mt-1"
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
+        </div>
+        <br />
+        <h2 className="text-center mt-4">Product List</h2>
+        {!isLoading && (
+          <div className="mt-4 col-8">
+            {productList.map((product) => (
+              <div
+                className={`row align-items-center mb-4 bg-secondary rounded-5 ${
+                  selectedProductId && selectedProductId !== product.id
+                    ? "blurred"
+                    : ""
+                }`}
+                key={product.id}
+              >
+                <div className="col-3 col-xs-3">
                   <img
-                    src={play}
+                    src={product.imageUrl}
+                    alt={product.name}
+                    className="img-fluid iconImage my-2"
+                  />
+                </div>
+                {selectedProductId === product.id ? (
+                  <div className="col-3 col-xs-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="name"
+                      required
+                      placeholder="Enter Product Name"
+                      value={product.name}
+                      onChange={handleUpdateChange}
+                    />
+                  </div>
+                ) : (
+                  <div className="col-3 col-xs-3">
+                    <h4>{product.name}</h4>
+                  </div>
+                )}
+                {selectedProductId === product.id ? (
+                  <div className="col-3 col-xs-3">
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="price"
+                      required
+                      placeholder="Price"
+                      value={product.price}
+                      onChange={handleUpdateChange}
+                    />
+                  </div>
+                ) : (
+                  <div className="col-3 col-xs-3">
+                    <h5>{product.price}</h5>
+                  </div>
+                )}
+                <div className="col-3 d-flex">
+                  <img
+                    src={bin}
+                    alt="Delete"
+                    className="img-fluid icon"
+                    onClick={() => {
+                      handleDelete(product.id, product.imageName);
+                    }}
+                  />
+                  <img
+                    src={update}
                     alt="Update"
                     className="img-fluid icon ms-2"
-                    onClick={() => handleAcceptUpdate(product.id)}
+                    onClick={() => handleUpdate(product.id)}
                   />
-                )}
+                  {selectedProductId === product.id && (
+                    <img
+                      src={play}
+                      alt="Update"
+                      className="img-fluid icon ms-2"
+                      onClick={() => handleAcceptUpdate(product.id)}
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

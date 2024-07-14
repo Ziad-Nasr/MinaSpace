@@ -32,22 +32,30 @@ const Landing = () => {
         <Block />
         <Block />
       </div>
-      <div className="cards mt-3">
-        <PostLandingCard
-          image={map}
-          title="Top quality"
-          des="Lorem ipsum Lorem ipsum"
-        />
-        <PostLandingCard
-          image={map}
-          title="Mix and match"
-          des="Lorem ipsum Lorem ipsum"
-        />
-        <PostLandingCard
-          image={map}
-          title="Shipping worldwide"
-          des="Lorem ipsum Lorem ipsum"
-        />
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-4 col-md-6 col-sm-4">
+            <PostLandingCard
+              image={map}
+              title="Top quality"
+              des="Lorem ipsum Lorem ipsum"
+            />
+          </div>
+          <div className="col-lg-4 col-md-6 col-sm-4">
+            <PostLandingCard
+              image={map}
+              title="Mix and match"
+              des="Lorem ipsum Lorem ipsum"
+            />
+          </div>
+          <div className="col-lg-4 col-md-6 col-sm-4">
+            <PostLandingCard
+              image={map}
+              title="Shipping worldwide"
+              des="Lorem ipsum Lorem ipsum"
+            />
+          </div>
+        </div>``
       </div>
       <Container className="mt-3">
         <Row className="mx-5">

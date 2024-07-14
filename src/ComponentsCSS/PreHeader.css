@@ -1,6 +1,6 @@
 .preHeader {
-  width: 90%;
-  /* height: 56px; */
+  width: 100%;
+  padding-bottom: 5px;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;

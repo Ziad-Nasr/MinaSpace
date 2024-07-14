@@ -8,6 +8,10 @@
 .Percentage {
   height: 100%;
 }
+.left {
+  left: 5px;
+  top: 5px;
+}
 .iconImage {
   max-width: 55px;
 }

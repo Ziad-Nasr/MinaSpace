@@ -13,13 +13,13 @@ const PreHeader = () => {
   return (
     <div className="d-flex justify-content-evenly gray">
       <div className="preHeader gray">
-        <div className="logoContainer">
+        <div className="logoContainer d-flex">
           <img src={twitterLogo} className="logo" />
           <img src={facebookLogo} className="logo" />
           <img src={instagramLogo} className="logo" />
           <img src={youtubeLogo} className="logo" />
         </div>
-        <div className="middleText">
+        <div className="middleText d-flex ">
           <img src={flame} className="flame" />
           <p className="m-0"> Free shipping on all U.S. orders $50+</p>
         </div>
