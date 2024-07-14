@@ -1,0 +1,79 @@
+.AdminAuthBody {
+  height: 100vh;
+}
+.AdminAuthlogo {
+  width: 125px;
+  height: 125px;
+  margin-top: 15px;
+  padding: 0px;
+}
+.AdminAuthTitle {
+  color: #2ebb77;
+  font-size: 50px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.AdminAuthSubtitle {
+  color: black;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 20px;
+  width: 400px;
+  height: 400px;
+  background-color: #fff;
+  border-radius: 60px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+label {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.AdminAuthlogin {
+  background-color: #269962;
+  color: #ffffff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 85%;
+  font-size: 20px;
+  font-weight: 400;
+}
+.AdminAuthlogin:hover {
+  background-color: rgb(35, 30, 30);
+}
+

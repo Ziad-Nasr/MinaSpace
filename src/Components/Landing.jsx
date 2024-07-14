@@ -55,7 +55,7 @@ const Landing = () => {
               des="Lorem ipsum Lorem ipsum"
             />
           </div>
-        </div>``
+        </div>
       </div>
       <Container className="mt-3">
         <Row className="mx-5">

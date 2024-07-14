@@ -12,8 +12,11 @@ import bin from "../assets/bin.png";
 import update from "../assets/gear.png";
 import play from "../assets/play-button.png";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { authActions } from "../store/authSlice";
 
 const Add = () => {
+  const dispatch = useDispatch();
   const navigator = useNavigate();
   const [product, setProduct] = useState({
     name: "",
@@ -29,11 +32,21 @@ const Add = () => {
   const [productList, setProductList] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState(null);
 
+  const isAdmin = useSelector((state) => state.auth.isAuth);
+
   useEffect(() => {
+    if (!isAdmin) {
+      navigator("/adminlogin");
+    }
     if (data) {
       setProductList(data);
     }
   }, [data]);
+
+  const handleLogOut = () => {
+    dispatch(authActions.logout());
+    navigator("/");
+  };
 
   function handleProductChange(e) {
     const { id, value, files } = e.target;
@@ -160,14 +173,19 @@ const Add = () => {
         productList.length > 2 ? "Percentage addBody" : "viewHeight addBody"
       }
     >
-      <button
-        className="btn btn-primary sticky-top left"
-        onClick={() => {
-          navigator("/");
-        }}
-      >
-        Return
-      </button>
+      <div className="d-flex justify-content-between mx-2 pt-2">
+        <button
+          className="btn btn-primary sticky-top"
+          onClick={() => {
+            navigator("/");
+          }}
+        >
+          Return
+        </button>
+        <button className="btn btn-danger sticky-top" onClick={handleLogOut}>
+          Log out
+        </button>
+      </div>
       <div className={"col-lg-12 d-flex flex-column align-items-center"}>
         <div
           className={`col-md-5 d-flex flex-column w-50 ${

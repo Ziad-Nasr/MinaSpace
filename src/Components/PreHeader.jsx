@@ -32,7 +32,7 @@ const PreHeader = () => {
         variant="success"
         className="shopNow"
         onClick={() => {
-          navigator("/Add");
+          navigator("/add");
         }}
       >
         Dashboard
