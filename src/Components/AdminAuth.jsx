@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store/authSlice.js";
 import { useNavigate } from "react-router-dom";
 import "../ComponentsCSS/AdminAuth.css";
+import { useCookies } from "react-cookie";
 
 const AdminAuth = () => {
   const navigator = useNavigate();
@@ -12,10 +13,10 @@ const AdminAuth = () => {
 
   const isAdmin = useSelector((state) => state.auth.isAuth);
   const dispatch = useDispatch();
-
+  const [cookies, setCookies, removeCookies] = useCookies("isLoggedIn");
   const handleSubmit = () => {
     try {
-      dispatch(authActions.login());
+      setCookies("isLoggedIn", true, { path: "/" });
       navigator("/Add");
     } catch (err) {
       console.log(err);
