@@ -29,9 +29,9 @@ const Add = () => {
   });
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
-  const { data, error, isLoading } = useFetch(
-    "https://63b02f17649c73f572cafbc3.mockapi.io/Products"
-  );
+  // const { data, error, isLoading } = useFetch(
+  //   "https://63b02f17649c73f572cafbc3.mockapi.io/Products"
+  // );
   const [productList, setProductList] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState(null);
 
@@ -43,12 +43,12 @@ const Add = () => {
       navigator("/adminlogin");
     }
     // console.log("My Data", data);
-    if (data) {
-      dispatch(productActions.setNewProductList(data));
-      console.log("ProductListRedux", productListRedux);
-      setProductList(productListRedux);
-    }
-  }, [data]);
+    // if (data) {
+    // dispatch(productActions.setNewProductList(data));
+    // console.log("ProductListRedux", productListRedux);
+    // }
+    setProductList(productListRedux);
+  }, [productListRedux]);
 
   const handleLogOut = () => {
     setCookies("isLoggedIn", false, { path: "/" });
@@ -123,6 +123,7 @@ const Add = () => {
         });
       }
     );
+    setProduct({});
   }
 
   const handleDelete = async (id, name) => {
@@ -211,7 +212,7 @@ const Add = () => {
               Log out
             </button>
           </div>
-          <div className={"col-lg-12 d-flex flex-column align-items-center"}>
+          <div className="col-lg-12 d-flex flex-column align-items-center">
             <div
               className={`col-md-5 d-flex flex-column w-50 ${
                 selectedProductId && selectedProductId !== product.id
@@ -229,6 +230,7 @@ const Add = () => {
                   required
                   placeholder="Enter Product Name"
                   onChange={handleProductChange}
+                  value={product.name}
                 />
               </div>
               <div className="form-group my-3">
@@ -241,6 +243,7 @@ const Add = () => {
                   placeholder="Price"
                   // value={product.price}
                   onChange={handleProductChange}
+                  value={product.price}
                 />
               </div>
               <div className="form-group mb-4">
@@ -254,6 +257,7 @@ const Add = () => {
                   required
                   accept=".png, .jpg, .jpeg"
                   onChange={handleProductChange}
+                  value={product.imageName}
                 />
               </div>
               <button
@@ -266,7 +270,7 @@ const Add = () => {
             </div>
             <br />
             <h2 className="text-center mt-4">Product List</h2>
-            {!isLoading && (
+            {
               <div className="mt-4 col-8">
                 {productListRedux &&
                   productList.map((product) => (
@@ -316,7 +320,7 @@ const Add = () => {
                         </div>
                       ) : (
                         <div className="col-3 col-xs-3">
-                          <h5>{product.price}</h5>
+                          <h5>{product.price} $</h5>
                         </div>
                       )}
                       <div className="col-3 d-flex">
@@ -346,7 +350,7 @@ const Add = () => {
                     </div>
                   ))}
               </div>
-            )}
+            }
           </div>
         </div>
       )}

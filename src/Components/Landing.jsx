@@ -79,10 +79,10 @@ const Landing = () => {
         <h1 className="text-center">Featured products</h1>
         <p className="text-center">What's more, we do it right!</p>
         <Row className="mx-5">
-          {memoizedProducts?.map((product) => (
+          {productListRedux.map((product) => (
             <div key={product.id} className="col-lg-3 col-md-4 cold-sm-6">
               <Product
-                img={product.img}
+                img={product.imageUrl}
                 title={product.title}
                 price={product.price}
               />

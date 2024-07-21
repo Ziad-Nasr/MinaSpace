@@ -1,6 +1,6 @@
 .addBody {
   background-color: #b0ddd8;
-  /* width: 100vw; */
+  min-height: 100vh;
 }
 .viewHeight {
   height: 100vh;
